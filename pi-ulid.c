@@ -68,12 +68,6 @@ static const char b32_chars[] = {'0','1','2','3','4','5','6','7','8','9',
                                  'A','B','C','D','E','F','G','H','J','K',
                                  'M','N','P','Q','R','S','T','V','W','X','Y','Z'};
 
-typedef struct uint80_t
-{
-  uint16_t hi;
-  uint64_t lo;
-} uint80_t;
-
 #define UINT80_ADD1(u80, overflows) do { \
     uint16_t hi = (u80).hi;              \
     uint64_t lo = (u80).lo;              \

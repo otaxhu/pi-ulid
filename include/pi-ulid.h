@@ -77,7 +77,7 @@ struct ulid_ctx
   */
 
   uint64_t _PRIVATE_last_time;
-  struct uint80_t {
+  struct {
     uint16_t hi;
     uint64_t lo;
   } _PRIVATE_last_random;
