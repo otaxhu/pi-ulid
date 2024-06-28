@@ -23,29 +23,29 @@
 
 // Crockford's base32 table, ASCII characters maps to its corresponding value in Crockford's
 // base32, -1 means an invalid ASCII character
-static const uint8_t ascii_to_b32_table[0xFF] = {
+static const uint8_t ascii_to_b32_table[0x100] = {
+    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
     -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
     -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
     -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
     -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
 
   // 0-9
-    -1,   -1,   -1,   -1,   -1,   -1,   -1, 0x00,
-  0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-  0x09,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+  0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+  0x08, 0x09,   -1,   -1,   -1,   -1,   -1,   -1,
 
   // Upper letters
-  0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10, 0x11,
-    -1, 0x12, 0x13,   -1, 0x14, 0x15,   -1, 0x16,
-  0x17, 0x18, 0x19, 0x1A,   -1, 0x1B, 0x1C, 0x1D,
-  0x1E, 0x1F,   -1,   -1,   -1,   -1,   -1,   -1,
+    -1, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10,
+  0x11,   -1, 0x12, 0x13,   -1, 0x14, 0x15,   -1,
+  0x16, 0x17, 0x18, 0x19, 0x1A,   -1, 0x1B, 0x1C,
+  0x1D, 0x1E, 0x1F,   -1,   -1,   -1,   -1,   -1,
 
   // Lower letters
-  0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10, 0x11,
-    -1, 0x12, 0x13,   -1, 0x14, 0x15,   -1, 0x16,
-  0x17, 0x18, 0x19, 0x1A,   -1, 0x1B, 0x1C, 0x1D,
-  0x1E, 0x1F,   -1,   -1,   -1,   -1,   -1,   -1,
-    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+    -1, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10,
+  0x11,   -1, 0x12, 0x13,   -1, 0x14, 0x15,   -1,
+  0x16, 0x17, 0x18, 0x19, 0x1A,   -1, 0x1B, 0x1C,
+  0x1D, 0x1E, 0x1F,   -1,   -1,   -1,   -1,   -1,
     -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
     -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
     -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
@@ -120,12 +120,12 @@ typedef struct uint80_t
   } while (0)
 
 #define MILLIS_SET_TO(millis, buf) \
-  (millis) = ((buf)[0] << 40) |    \
-             ((buf)[1] << 32) |    \
-             ((buf)[2] << 24) |    \
-             ((buf)[3] << 16) |    \
-             ((buf)[4] << 8) |     \
-             ((buf)[5])
+  (millis) = ((uint64_t)((buf)[0]) << 40) |    \
+             ((uint64_t)((buf)[1]) << 32) |    \
+             ((uint64_t)((buf)[2]) << 24) |    \
+             ((uint64_t)((buf)[3]) << 16) |    \
+             ((uint64_t)((buf)[4]) << 8) |     \
+             ((uint64_t)((buf)[5]))
 
 static int ulid_new_internal(struct ulid_ctx *ctx, uint8_t buffer[ULID_SIZE])
 {
